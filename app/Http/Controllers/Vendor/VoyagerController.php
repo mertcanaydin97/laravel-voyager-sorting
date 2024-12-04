@@ -41,25 +41,4 @@ class VoyagerController extends Controller
         }
 
     }
-    public function sort_data(Request $request, $table = null, $column = null)
-    {
-        if ($table) {
-            $type = 'sorting';
-            $table_name = $table;
-            $sortables = DB::table($table)->orderBy($column, 'asc')->get();
-        } else {
-
-            $type = 'dbselect';
-            $table_name = '';
-            $tablename = 'Tables_in_' . ENV('DB_DATABASE', 'table');
-            $sortables = [];
-            $tables = DB::select('SHOW TABLES');
-            foreach ($tables as $key => $table) {
-                $table = $table->{$tablename};
-                //$sortables[$table] = DB::select($table)->get();
-                $sortables[$table] = DB::getSchemaBuilder()->getColumnListing($table);
-            }
-        }
-        return view('/vendor/voyager/sort', compact('sortables', 'type', 'table_name', 'column'));
-    }
 }
