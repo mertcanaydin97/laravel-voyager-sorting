@@ -12,7 +12,7 @@ class VoyagerController extends Controller
     {
         if ($request->isMethod('post')) {
             foreach (request()->get('order') as $key => $order) {
-                $item = DB::table($table)->where('id', $order)->update([$column => 1]);
+                $item = DB::table($table)->where('id', $key)->update([$column => $order]);
             }
             return 'Sıralandı.';
         } else {
